@@ -1,3 +1,8 @@
+let humanScore = 0;
+let cpuScore = 0;
+
+let draw = "It's a DRAW";
+
 function computerPlay () {
 
     let rps = ["rock","paper","scissor"];
@@ -9,91 +14,117 @@ function computerPlay () {
  }
  
  computerPlay();
- 
- let playerSelection;
-   
- let computerSelection = computerPlay(); 
- 
- let humanScore = 0;
- let cpuScore = 0;
- let draws = 0;
- 
- let humanWinsRound = "Point"
- let cpuWinsRound = "Point";
- let draw = "DRAW";
 
+const btnRock = document.getElementById('rocks');
+const btnPaper = document.getElementById('papers');
+const btnScissors = document.getElementById('scissors');
+const finalMessage = document.getElementById('final-message');
 
- function playRound(playerSelection,computerSelection){
- 
-   playerSelection = prompt("chose your sign");
- 
-   computerSelection = computerPlay();
+const replayGame = document.getElementById('play-again');
 
+replayGame.addEventListener('click', function () {
+  location.reload();
+});
 
-     if(playerSelection.toLowerCase() === "rock" && computerSelection === "scissor"){     
-      return("HUMAN :" + " " + ++humanScore + " " + humanWinsRound)      
-     }
+btnRock.addEventListener('click', function playRound(playerSelection,computerSelection){
 
-     else if(playerSelection.toLowerCase() === "rock" && computerSelection === "paper"){     
-      return("CPU :" + " " + ++cpuScore + " " + cpuWinsRound)      
-     }
+  playerSelection = btnRock;
+  computerSelection = computerPlay();
 
-     else if(playerSelection.toLowerCase() === "rock" && computerSelection === "rock"){     
-      return(draw)      
-     }
-     
-     if(playerSelection.toLowerCase() === "paper" && computerSelection === "scissor"){     
-      return("HUMAN :" + " " + ++humanScore + " " + humanWinsRound)      
-     }
+if(playerSelection === btnRock && computerSelection === "scissor"){  
 
-     else if(playerSelection.toLowerCase() === "paper" && computerSelection === "scissor"){     
-      return("CPU :" + " " + ++cpuScore + " " + cpuWinsRound)      
-     }
+    humanScore++;
+    document.getElementById('results').textContent = "Rock Breaks Scissors";
+    document.getElementById('humanScore').textContent = "Human Points : " + humanScore;
 
-     else if(playerSelection.toLowerCase() === "paper" && computerSelection === "paper"){     
-      return(draw)      
-     }
-
-     if(playerSelection.toLowerCase() === "scissor" && computerSelection === "paper"){     
-      return ("HUMAN :" + " " + ++humanScore + " " + humanWinsRound)      
-     }
-
-     else if(playerSelection.toLowerCase() === "scissor" && computerSelection === "rock"){     
-      return("CPU :" + " " + ++cpuScore + " " + cpuWinsRound)      
-     }
-
-     else if(playerSelection.toLowerCase() === "scissor" && computerSelection === "scissor"){     
-      return(draw)      
-     }
-    
-     
- };
-
-
- function game() {
- 
-   console.log(playRound(playerSelection,computerSelection));
-   console.log(playRound(playerSelection,computerSelection));
-   console.log(playRound(playerSelection,computerSelection));
-   console.log(playRound(playerSelection,computerSelection));
-   console.log(playRound(playerSelection,computerSelection));
-
-   if (humanScore > cpuScore){
-
-    return "HUMAN WINS!";
-
-   }
-
-   else if (cpuScore > humanScore){
-     return "CPU WINS!";
-   }
-
-   else if (cpuScore === humanScore){
-    return "ITS A DRAW NO WINNER";
   }
- }
- console.log(game());
- 
- 
- 
- 
+
+else if(playerSelection === btnRock && computerSelection === "paper"){  
+
+    cpuScore++;
+    document.getElementById('results').textContent = "Paper Covers Rock";
+    document.getElementById('cpuScore').textContent = "CPU Points : " + cpuScore;
+
+  }
+
+else if(playerSelection === btnRock && computerSelection === "rock"){    
+
+  document.getElementById('results').textContent = draw;
+
+          winCheck();       
+  }});
+
+////////////////////PAPER BUTTON/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+btnPaper.addEventListener('click', function playRound(playerSelection,computerSelection){
+
+  playerSelection = btnPaper;
+  computerSelection = computerPlay();
+
+if(playerSelection === btnPaper && computerSelection === "scissor"){ 
+
+    cpuScore++;
+    document.getElementById('results').textContent = "Scissor cuts paper";
+    document.getElementById('cpuScore').textContent = "CPU Points : " + cpuScore;
+          
+  }
+
+else if(playerSelection === btnPaper && computerSelection === "rock"){  
+
+    humanScore++;
+    document.getElementById('results').textContent = "Paper Covers Rock";
+    document.getElementById('humanScore').textContent = "Human Points : " + humanScore;
+
+  }
+
+else if(playerSelection === btnPaper && computerSelection === "paper"){  
+
+  document.getElementById('results').textContent = draw;
+
+  winCheck();       
+
+  }});
+
+
+////////////////////SCISSORS BUTTON/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+btnScissors.addEventListener('click', function playRound(playerSelection,computerSelection){
+  
+
+  playerSelection = btnScissors;
+  computerSelection = computerPlay();
+
+if(playerSelection === btnScissors && computerSelection === "paper"){   
+    humanScore++;
+    document.getElementById('results').textContent = "Scissors Cuts paper";
+    document.getElementById('humanScore').textContent = "Human Points : " + humanScore
+
+  }
+
+else if(playerSelection === btnScissors && computerSelection === "rock"){  
+
+  cpuScore++;
+  document.getElementById('results').textContent = "Rock Breaks Scissors";
+  document.getElementById('cpuScore').textContent = "CPU Points : " + cpuScore;
+  }
+
+else if(playerSelection === btnScissors && computerSelection === "scissor"){  
+  document.getElementById('results').textContent = draw;
+
+  winCheck();       
+
+  }});
+
+function winCheck(){
+
+  if(humanScore === 5){
+    document.getElementById('final-message').textContent = 'HUMANS WIN';
+    
+  }
+  else if(cpuScore === 5){
+    document.getElementById('final-message').textContent = 'ROBOTS WIN';
+    
+  }
+}
+winCheck();
